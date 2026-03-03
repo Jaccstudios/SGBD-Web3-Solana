@@ -61,15 +61,82 @@ El sistema utiliza **PDAs (Program Derived Addresses)**. En lugar de generar cue
 
 ## 📂 Estructura del Proyecto
 
-A continuación, se detalla la anatomía del proyecto y la función de cada archivo clave:
+El repositorio está estructurado como un monorepo que separa claramente la lógica on-chain del cliente web. A continuación, se detalla el árbol de directorios:
 
-### 1. El Backend (Smart Contract en Rust)
-* **`smart_contract/lib.rs`**: Es el "motor" real del SGBD. Contiene la lógica del negocio que vive en la blockchain. Define las instrucciones (`insertar_registro`), valida las firmas de seguridad e instruye a Solana sobre cuánta memoria reservar para cada dato.
-* **`smart_contract/anchor.test.ts`**: Script de pruebas automatizadas (Mocha/Chai) que simula interacciones directas con el contrato inteligente para verificar la integridad de la memoria antes de lanzar a producción.
+```text
+SGBD-Web3-Solana/
+├── mi-sgbd-back/                 # 🦀 BACKEND: Contrato Inteligente en Rust/Anchor
+│   ├── Anchor.toml               — Configuración de Anchor (program IDs, redes).
+│   ├── Cargo.toml                — Manifiesto Cargo para crates del backend.
+│   ├── package.json              — Scripts y dependencias JS para utilidades/cliente.
+│   ├── tsconfig.json
+│   ├── app/                      — Código y recursos auxiliares del backend.
+│   ├── client/
+│   │   └── client.ts             — Cliente TypeScript para interactuar con el programa.
+│   ├── migrations/
+│   │   └── deploy.ts             — Script de migración y despliegue.
+│   ├── programs/
+│   │   └── sgbd-web3/
+│   │       ├── Cargo.toml
+│   │       ├── Xargo.toml
+│   │       └── src/
+│   │           └── lib.rs        — Código principal del programa Solana.
+│   ├── target/                   — Artefactos de compilación Rust.
+│   │   └── debug/
+│   │       ├── build/            — Carpetas de compilación por crate.
+│   │       └── deps/             — Dependencias compiladas.
+│   ├── deploy/
+│   │   └── sgbd_web3-keypair.json — Keypair de despliegue en localnet/testnet.
+│   ├── flycheck0/
+│   │   └── stderr, stdout        — Salidas de comprobaciones.
+│   └── tests/
+│       └── anchor.ts             — Tests de integración con Mocha/Chai.
+│
+└── mi-sgbd-front/                # ⚛️ FRONTEND: Interfaz de Usuario Web3 (Next.js)
+    ├── components.json           — Metadatos de componentes de UI.
+    ├── eslint.config.mjs
+    ├── next-env.d.ts
+    ├── next.config.ts            — Configuración del servidor Next.js.
+    ├── package.json              — Dependencias y scripts del frontend.
+    ├── postcss.config.mjs
+    ├── README.md
+    ├── tsconfig.json
+    ├── public/                   — Recursos públicos (imágenes, estáticos).
+    └── src/
+        ├── idl.json              — Interface Description Language (Traductor de Rust a TS).
+        ├── app/
+        │   ├── globals.css       — Estilos globales (Tailwind).
+        │   ├── layout.tsx        — Estructura y proveedores globales.
+        │   ├── page.tsx          — Consola principal y lógica de inyección de datos.
+        │   └── account/          — Vistas relacionadas con cuentas de usuario.
+        ├── components/
+        │   ├── app-alert.tsx
+        │   ├── app-footer.tsx
+        │   ├── app-header.tsx
+        │   ├── app-hero.tsx
+        │   ├── app-layout.tsx
+        │   ├── app-modal.tsx
+        │   ├── app-providers.tsx
+        │   ├── react-query-provider.tsx
+        │   ├── theme-provider.tsx
+        │   ├── theme-select.tsx
+        │   └── account/, cluster/, dashboard/, solana/, ui/ — Subcarpetas por dominio.
+        └── lib/
+            └── utils.ts          — Utilidades compartidas y formateadores.
 
-### 2. El Frontend (Interfaz de Usuario en React/Next.js)
-* **`src/app/page.tsx`**: Es el panel de control gráfico (DApp). Se encarga de capturar la entrada del usuario, solicitar la firma a través de la Phantom Wallet y enviar la transacción RPC a la red de Solana. Incluye un sistema dinámico multilingüe (ES, EN, PT).
-* **`src/idl.json`**: El *Interface Description Language*. Es el "diccionario traductor" fundamental. Le explica al código de JavaScript/TypeScript qué forma tiene el contrato de Rust.
+```
+
+### 🧠 Explicación Breve por Sección
+
+* **`mi-sgbd-back`**: Contiene el programa on-chain implementado en Rust usando el framework Anchor, los scripts de despliegue, un cliente TypeScript para pruebas y los artefactos de compilación. El núcleo absoluto de la base de datos reside en `programs/sgbd-web3/src/lib.rs`.
+* **`mi-sgbd-front`**: Es la aplicación cliente construida con Next.js y React. Consume el archivo `idl.json` para entender las instrucciones del contrato y comunicarse con la blockchain de Solana. Su lógica modular agrupa componentes reutilizables en `src/components`.
+
+### 🔑 Archivos Críticos
+
+* **`Anchor.toml`**: Central de configuración de Anchor que define las redes objetivo (localnet, devnet) y las llaves del programa.
+* **`idl.json`**: El mapa estructural de la base de datos; indispensable para que el frontend envíe parámetros correctos al backend.
+* **`sgbd_web3-keypair.json`**: La llave criptográfica con autoridad sobre los despliegues locales o de prueba.
+
 
 ---
 
