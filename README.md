@@ -175,7 +175,7 @@ Abre `http://localhost:3000` en tu navegador. Necesitarás la extensión **Phant
 
 El Smart Contract está desplegado públicamente en la red de pruebas de Solana bajo la siguiente dirección:
 `HFZem2x9kmBtxNmAxHWb6MigiHjGEKV8maGYsMtgiSm9`
-El Backend de este proyecto fue realizado en Solana Playground y se puede ejecutar y revisar en el siguiente enlace [Solana Playgrouand](https://beta.solpg.io/69a5cf92f7f3d227e97ef89).
+El Backend de este proyecto fue realizado en Solana Playground y se puede ejecutar y revisar en el siguiente enlace [Solana Playground](https://beta.solpg.io/69a5cf92f7f3d227e97ef89).
 
 ---
 
