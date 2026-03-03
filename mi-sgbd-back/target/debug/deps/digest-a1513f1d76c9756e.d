@@ -1,0 +1,11 @@
+C:\Users\julio\Downloads\project-solana\mi-sgbd-back\target\debug\deps\digest-a1513f1d76c9756e.d: C:\Users\julio\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\digest-0.9.0\src\lib.rs C:\Users\julio\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\digest-0.9.0\src\digest.rs C:\Users\julio\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\digest-0.9.0\src\dyn_digest.rs C:\Users\julio\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\digest-0.9.0\src\errors.rs C:\Users\julio\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\digest-0.9.0\src\fixed.rs C:\Users\julio\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\digest-0.9.0\src\variable.rs C:\Users\julio\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\digest-0.9.0\src\xof.rs
+
+C:\Users\julio\Downloads\project-solana\mi-sgbd-back\target\debug\deps\libdigest-a1513f1d76c9756e.rmeta: C:\Users\julio\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\digest-0.9.0\src\lib.rs C:\Users\julio\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\digest-0.9.0\src\digest.rs C:\Users\julio\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\digest-0.9.0\src\dyn_digest.rs C:\Users\julio\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\digest-0.9.0\src\errors.rs C:\Users\julio\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\digest-0.9.0\src\fixed.rs C:\Users\julio\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\digest-0.9.0\src\variable.rs C:\Users\julio\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\digest-0.9.0\src\xof.rs
+
+C:\Users\julio\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\digest-0.9.0\src\lib.rs:
+C:\Users\julio\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\digest-0.9.0\src\digest.rs:
+C:\Users\julio\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\digest-0.9.0\src\dyn_digest.rs:
+C:\Users\julio\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\digest-0.9.0\src\errors.rs:
+C:\Users\julio\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\digest-0.9.0\src\fixed.rs:
+C:\Users\julio\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\digest-0.9.0\src\variable.rs:
+C:\Users\julio\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\digest-0.9.0\src\xof.rs:

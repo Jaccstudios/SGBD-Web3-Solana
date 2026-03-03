@@ -1,0 +1,12 @@
+C:\Users\julio\Downloads\project-solana\mi-sgbd-back\target\debug\deps\sha2-315cc2ef96838f67.d: C:\Users\julio\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\sha2-0.9.9\src\lib.rs C:\Users\julio\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\sha2-0.9.9\src\consts.rs C:\Users\julio\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\sha2-0.9.9\src\sha256.rs C:\Users\julio\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\sha2-0.9.9\src\sha512.rs C:\Users\julio\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\sha2-0.9.9\src\sha256\soft.rs C:\Users\julio\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\sha2-0.9.9\src\sha256\x86.rs C:\Users\julio\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\sha2-0.9.9\src\sha512\soft.rs C:\Users\julio\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\sha2-0.9.9\src\sha512\x86.rs
+
+C:\Users\julio\Downloads\project-solana\mi-sgbd-back\target\debug\deps\libsha2-315cc2ef96838f67.rmeta: C:\Users\julio\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\sha2-0.9.9\src\lib.rs C:\Users\julio\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\sha2-0.9.9\src\consts.rs C:\Users\julio\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\sha2-0.9.9\src\sha256.rs C:\Users\julio\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\sha2-0.9.9\src\sha512.rs C:\Users\julio\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\sha2-0.9.9\src\sha256\soft.rs C:\Users\julio\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\sha2-0.9.9\src\sha256\x86.rs C:\Users\julio\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\sha2-0.9.9\src\sha512\soft.rs C:\Users\julio\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\sha2-0.9.9\src\sha512\x86.rs
+
+C:\Users\julio\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\sha2-0.9.9\src\lib.rs:
+C:\Users\julio\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\sha2-0.9.9\src\consts.rs:
+C:\Users\julio\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\sha2-0.9.9\src\sha256.rs:
+C:\Users\julio\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\sha2-0.9.9\src\sha512.rs:
+C:\Users\julio\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\sha2-0.9.9\src\sha256\soft.rs:
+C:\Users\julio\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\sha2-0.9.9\src\sha256\x86.rs:
+C:\Users\julio\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\sha2-0.9.9\src\sha512\soft.rs:
+C:\Users\julio\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\sha2-0.9.9\src\sha512\x86.rs:

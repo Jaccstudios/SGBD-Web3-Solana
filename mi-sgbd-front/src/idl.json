@@ -1,0 +1,49 @@
+{
+  "version": "0.1.0",
+  "name": "sgbd_web3",
+  "instructions": [
+    {
+      "name": "insertarRegistro",
+      "accounts": [
+        { "name": "usuario", "isMut": true, "isSigner": true },
+        { "name": "registro", "isMut": true, "isSigner": false },
+        { "name": "systemProgram", "isMut": false, "isSigner": false }
+      ],
+      "args": [
+        { "name": "clave", "type": "string" },
+        { "name": "valor", "type": "string" }
+      ]
+    },
+    {
+      "name": "actualizarRegistro",
+      "accounts": [
+        { "name": "usuario", "isMut": false, "isSigner": true },
+        { "name": "registro", "isMut": true, "isSigner": false }
+      ],
+      "args": [
+        { "name": "nuevoValor", "type": "string" }
+      ]
+    },
+    {
+      "name": "borrarRegistro",
+      "accounts": [
+        { "name": "usuario", "isMut": false, "isSigner": true },
+        { "name": "registro", "isMut": true, "isSigner": false }
+      ],
+      "args": []
+    }
+  ],
+  "accounts": [
+    {
+      "name": "ModeloRegistro",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          { "name": "owner", "type": "publicKey" },
+          { "name": "clave", "type": "string" },
+          { "name": "valor", "type": "string" }
+        ]
+      }
+    }
+  ]
+}
