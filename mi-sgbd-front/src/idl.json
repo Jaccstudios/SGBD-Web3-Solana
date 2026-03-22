@@ -3,45 +3,105 @@
   "name": "sgbd_web3",
   "instructions": [
     {
-      "name": "insertarRegistro",
+      "name": "createCollection",
       "accounts": [
-        { "name": "usuario", "isMut": true, "isSigner": true },
-        { "name": "registro", "isMut": true, "isSigner": false },
-        { "name": "systemProgram", "isMut": false, "isSigner": false }
+        {
+          "name": "collection",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
       ],
       "args": [
-        { "name": "clave", "type": "string" },
-        { "name": "valor", "type": "string" }
+        {
+          "name": "name",
+          "type": "string"
+        }
       ]
     },
     {
-      "name": "actualizarRegistro",
+      "name": "insertRecord",
       "accounts": [
-        { "name": "usuario", "isMut": false, "isSigner": true },
-        { "name": "registro", "isMut": true, "isSigner": false }
+        {
+          "name": "collection",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "dbRecord",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
       ],
       "args": [
-        { "name": "nuevoValor", "type": "string" }
+        {
+          "name": "contentHash",
+          "type": "string"
+        }
       ]
-    },
-    {
-      "name": "borrarRegistro",
-      "accounts": [
-        { "name": "usuario", "isMut": false, "isSigner": true },
-        { "name": "registro", "isMut": true, "isSigner": false }
-      ],
-      "args": []
     }
   ],
   "accounts": [
     {
-      "name": "ModeloRegistro",
+      "name": "Collection",
       "type": {
         "kind": "struct",
         "fields": [
-          { "name": "owner", "type": "publicKey" },
-          { "name": "clave", "type": "string" },
-          { "name": "valor", "type": "string" }
+          {
+            "name": "authority",
+            "type": "publicKey"
+          },
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "recordCount",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "DbRecord",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "collection",
+            "type": "publicKey"
+          },
+          {
+            "name": "authority",
+            "type": "publicKey"
+          },
+          {
+            "name": "contentHash",
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "type": "u64"
+          }
         ]
       }
     }
