@@ -13,7 +13,7 @@
   <img height="50x" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/CSS3_logo.svg/960px-CSS3_logo.svg.png" />
   <img height="50x" src="https://uxwing.com/wp-content/themes/uxwing/download/file-and-folder-type/file-json-color-green-icon.png" />
   <img height="50x" src="https://git-scm.com/images/logos/downloads/Git-Icon-1788C.png" />
-  <img height="50x" src="https://tumornet.telsip.uniwa.gr/images/github.jpg" />
+  <img height="50x" src="https://e7.pngegg.com/pngimages/551/770/png-clipart-github-pages-logo-repository-fork-github-mammal-cat-like-mammal.png" />
   <img height="50x" src="https://ih1.redbubble.net/image.5755729574.8108/st,small,507x507-pad,600x600,f8f8f8.jpg" />
 </p>
 

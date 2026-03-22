@@ -1,102 +1,79 @@
 use anchor_lang::prelude::*;
 
-// Tu Program ID oficial y permanente para este proyecto
+// Tu Program ID de Solana Playground
 declare_id!("HFZem2x9kmBtxNmAxHWb6MigiHjGEKV8maGYsMtgiSm9");
 
 #[program]
 pub mod sgbd_web3 {
     use super::*;
 
-    // CREATE: Equivalente a un INSERT INTO
-    pub fn insertar_registro(
-        ctx: Context<InsertarRegistro>,
-        clave: String,
-        valor: String,
-    ) -> Result<()> {
-        let registro = &mut ctx.accounts.registro;
-
-        // Guardamos quién es el dueño, la llave (ej. "temperatura") y el valor (ej. "180C")
-        registro.owner = ctx.accounts.usuario.key();
-        registro.clave = clave;
-        registro.valor = valor;
-
-        msg!("SGBD: Registro insertado exitosamente en la blockchain.");
+    pub fn create_collection(ctx: Context<CreateCollection>, name: String) -> Result<()> {
+        let collection = &mut ctx.accounts.collection;
+        collection.authority = ctx.accounts.authority.key();
+        collection.name = name;
+        collection.record_count = 0;
         Ok(())
     }
 
-    // UPDATE: Equivalente a un UPDATE WHERE
-    pub fn actualizar_registro(
-        ctx: Context<ActualizarRegistro>,
-        nuevo_valor: String,
-    ) -> Result<()> {
-        let registro = &mut ctx.accounts.registro;
-        registro.valor = nuevo_valor;
+    pub fn insert_record(ctx: Context<InsertRecord>, content_hash: String) -> Result<()> {
+        let collection = &mut ctx.accounts.collection;
+        let db_record = &mut ctx.accounts.db_record;
 
-        msg!("SGBD: Registro actualizado.");
-        Ok(())
-    }
+        db_record.collection = collection.key();
+        db_record.authority = ctx.accounts.authority.key();
+        db_record.content_hash = content_hash;
+        db_record.id = collection.record_count;
 
-    // DELETE: Equivalente a un DROP o DELETE
-    pub fn borrar_registro(_ctx: Context<BorrarRegistro>) -> Result<()> {
-        msg!("SGBD: Registro eliminado y memoria liberada.");
+        collection.record_count += 1;
         Ok(())
     }
 }
 
-// --- ESTRUCTURAS DE VALIDACIÓN Y PDAs ---
-
 #[derive(Accounts)]
-#[instruction(clave: String)] // Pasamos la clave como parámetro para generar la dirección única (PDA)
-pub struct InsertarRegistro<'info> {
-    #[account(mut)]
-    pub usuario: Signer<'info>,
-
-    // Aquí nace tu SGBD: Generamos una dirección única basada en la palabra "registro", la wallet del usuario y la clave del dato.
+#[instruction(name: String)]
+pub struct CreateCollection<'info> {
     #[account(
         init,
-        payer = usuario,
-        space = 8 + 32 + (4 + 50) + (4 + 200), // Espacio en memoria reservado para el dato
-        seeds = [b"registro", usuario.key().as_ref(), clave.as_bytes()],
+        payer = authority,
+        space = 8 + 32 + 4 + 50 + 8,
+        seeds = [b"collection", authority.key().as_ref(), name.as_bytes()],
         bump
     )]
-    pub registro: Account<'info, ModeloRegistro>,
+    pub collection: Account<'info, Collection>,
+    #[account(mut)]
+    pub authority: Signer<'info>,
     pub system_program: Program<'info, System>,
 }
 
 #[derive(Accounts)]
-#[instruction(clave: String)]
-pub struct ActualizarRegistro<'info> {
-    pub usuario: Signer<'info>,
-
+#[instruction(content_hash: String)]
+pub struct InsertRecord<'info> {
+    #[account(mut, has_one = authority)]
+    pub collection: Account<'info, Collection>,
     #[account(
-        mut,
-        seeds = [b"registro", usuario.key().as_ref(), clave.as_bytes()],
-        bump,
-        constraint = registro.owner == usuario.key() // CORRECCIÓN: Validación manual de seguridad
+        init,
+        payer = authority,
+        space = 8 + 32 + 32 + 4 + 64 + 8,
+        seeds = [b"record", collection.key().as_ref(), &collection.record_count.to_le_bytes()],
+        bump
     )]
-    pub registro: Account<'info, ModeloRegistro>,
+    pub db_record: Account<'info, DbRecord>,
+    #[account(mut)]
+    pub authority: Signer<'info>,
+    pub system_program: Program<'info, System>,
 }
-
-#[derive(Accounts)]
-#[instruction(clave: String)]
-pub struct BorrarRegistro<'info> {
-    pub usuario: Signer<'info>,
-
-    #[account(
-        mut,
-        close = usuario, // Destruye la cuenta y devuelve la fracción de SOL al usuario
-        seeds = [b"registro", usuario.key().as_ref(), clave.as_bytes()],
-        bump,
-        constraint = registro.owner == usuario.key() // CORRECCIÓN: Validación manual de seguridad
-    )]
-    pub registro: Account<'info, ModeloRegistro>,
-}
-
-// --- EL ESQUEMA DE TU BASE DE DATOS ---
 
 #[account]
-pub struct ModeloRegistro {
-    pub owner: Pubkey,
-    pub clave: String,
-    pub valor: String,
+pub struct Collection {
+    pub authority: Pubkey,
+    pub name: String,
+    pub record_count: u64,
+}
+
+#[account]
+pub struct DbRecord {
+    pub collection: Pubkey,
+    pub authority: Pubkey,
+    pub content_hash: String,
+    pub id: u64,
 }
