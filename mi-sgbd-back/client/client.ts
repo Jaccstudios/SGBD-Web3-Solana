@@ -1,60 +1,81 @@
-console.log("Iniciando el cliente del SGBD...");
+console.log("Iniciando Pruebas SGBD_WEB3 (CRUD Total)...");
 
-const collectionName = "UsuariosApp";
-const recordHash = "QmTzQ1...IPFS_Hash_Simulado"; 
+const collectionName = "DB_Drop_Test_1";
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const [collectionPda] = anchor.web3.PublicKey.findProgramAddressSync(
   [Buffer.from("collection"), pg.wallet.publicKey.toBuffer(), Buffer.from(collectionName)],
   pg.program.programId
 );
 
-console.log("PDA de la Colección:", collectionPda.toBase58());
-
 async function main() {
   try {
-    console.log("Creando la colección...");
-    const txHash = await pg.program.methods
-      .createCollection(collectionName)
-      .accounts({
-        collection: collectionPda,
-        authority: pg.wallet.publicKey,
-        systemProgram: anchor.web3.SystemProgram.programId,
-      })
-      .rpc();
-    console.log("✅ Colección creada. Tx:", txHash);
-  } catch (e) {
-    console.log("⚠️ La colección ya existe (ignoramos).");
-  }
+    // 1. CREATE COLLECTION
+    console.log(`\n[1] Creando la colección '${collectionName}'...`);
+    try {
+      await pg.program.methods.createCollection(collectionName)
+        .accounts({ collection: collectionPda, authority: pg.wallet.publicKey, systemProgram: anchor.web3.SystemProgram.programId })
+        .rpc();
+      console.log("✅ Colección creada.");
+    } catch (e) {
+      console.log("⚠️ La colección ya existe.");
+    }
 
-  const collectionAccount = await pg.program.account.collection.fetch(collectionPda);
-  const currentCount = collectionAccount.recordCount;
-  
-  // Convertimos el ID a un formato que Rust entienda
-  const idBuffer = currentCount.toArrayLike(Buffer, "le", 8);
+    // 2. INSERT MULTIPLES REGISTROS (Simulando actividad)
+    console.log("\n[2] Insertando 2 registros de prueba...");
+    for (let i = 0; i < 2; i++) {
+      let colData = await pg.program.account.collection.fetch(collectionPda);
+      let idBuffer = colData.recordCount.toArrayLike(Buffer, "le", 8);
+      
+      let [recordPda] = anchor.web3.PublicKey.findProgramAddressSync(
+        [Buffer.from("record"), collectionPda.toBuffer(), idBuffer],
+        pg.program.programId
+      );
 
-  const [recordPda] = anchor.web3.PublicKey.findProgramAddressSync(
-    [Buffer.from("record"), collectionPda.toBuffer(), idBuffer],
-    pg.program.programId
-  );
+      await pg.program.methods.insertRecord(`Hash_Prueba_Nro_${i}`)
+        .accounts({ collection: collectionPda, dbRecord: recordPda, authority: pg.wallet.publicKey, systemProgram: anchor.web3.SystemProgram.programId })
+        .rpc();
+      console.log(`✅ Registro ID ${i} insertado.`);
+    }
 
-  try {
-    console.log(`Insertando registro con ID: ${currentCount.toString()}...`);
-    const txRec = await pg.program.methods
-      .insertRecord(recordHash)
-      .accounts({
-        collection: collectionPda,
-        dbRecord: recordPda,
-        authority: pg.wallet.publicKey,
-        systemProgram: anchor.web3.SystemProgram.programId,
-      })
+    await sleep(2000);
+
+    // 3. EL BUCLE DE DESTRUCCIÓN (DROP DATABASE)
+    console.log("\n[3] Iniciando DROP COLLECTION (Borrando registros huérfanos)...");
+    
+    // a) Buscamos TODOS los registros que pertenezcan a esta colección en la blockchain
+    // El offset 8 salta el discriminador de Anchor, y leemos la pubkey de la colección
+    const recordsHuerfanos = await pg.program.account.dbRecord.all([
+      {
+        memcmp: {
+          offset: 8,
+          bytes: collectionPda.toBase58(),
+        },
+      },
+    ]);
+
+    console.log(`🔍 Se encontraron ${recordsHuerfanos.length} registros. Borrando en bucle...`);
+
+    // b) Borramos cada registro en un bucle
+    for (let rec of recordsHuerfanos) {
+      await pg.program.methods.deleteRecord()
+        .accounts({ dbRecord: rec.publicKey, authority: pg.wallet.publicKey })
+        .rpc();
+      console.log(`💀 Registro cerrado: ${rec.publicKey.toBase58().substring(0,8)}...`);
+    }
+
+    await sleep(2000);
+
+    // c) Borramos la colección madre
+    console.log("\n[4] Destruyendo la Colección Madre...");
+    await pg.program.methods.deleteCollection()
+      .accounts({ collection: collectionPda, authority: pg.wallet.publicKey })
       .rpc();
     
-    console.log("✅ Registro insertado. Tx:", txRec);
-    
-    const recAccount = await pg.program.account.dbRecord.fetch(recordPda);
-    console.log("📚 Datos en Blockchain -> Hash:", recAccount.contentHash);
+    console.log("✅ ¡DROP DATABASE EJECUTADO CON ÉXITO! Todos los SOL recuperados.");
+
   } catch (e) {
-    console.error("❌ Error al insertar el registro:", e);
+    console.error("❌ Error Crítico:", e);
   }
 }
 

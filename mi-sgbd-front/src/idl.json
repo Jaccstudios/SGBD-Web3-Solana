@@ -58,6 +58,59 @@
           "type": "string"
         }
       ]
+    },
+    {
+      "name": "updateRecord",
+      "accounts": [
+        {
+          "name": "dbRecord",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": true
+        }
+      ],
+      "args": [
+        {
+          "name": "newContentHash",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "deleteRecord",
+      "accounts": [
+        {
+          "name": "dbRecord",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": true,
+          "isSigner": true
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "deleteCollection",
+      "accounts": [
+        {
+          "name": "collection",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": true,
+          "isSigner": true
+        }
+      ],
+      "args": []
     }
   ],
   "accounts": [
