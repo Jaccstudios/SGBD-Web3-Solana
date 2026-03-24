@@ -12,6 +12,12 @@
 Este proyecto es un Producto Mínimo Viable (MVP) de un **Sistema Gestor de Bases de Datos (SGBD) Descentralizado**, construido nativamente sobre la blockchain de Solana para el **WayLearn Latam Hackathon**.
 </div>
 
+## 🎥 Demostración del Proyecto (Technical Walkthrough)
+
+[![SGBD Web3 - Demo](https://img.youtube.com/vi/bJQedeN5sG4/maxresdefault.jpg)](https://youtu.be/bJQedeN5sG4)
+
+> 💡 **Nota:** Haz clic en la imagen superior para ver el recorrido técnico completo, la demostración en vivo de la terminal CLI inyectando datos y la auditoría on-chain a través de Solscan.
+
 ## 📌 Acerca del Proyecto (Categoría: Blue Sky)
 
 ### ¿Qué es?
